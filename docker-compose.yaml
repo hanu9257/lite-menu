@@ -1,0 +1,19 @@
+version: '0.0.1'
+
+services:
+  postgres:
+    image: postgres:latest
+    environment:
+      POSTGRES_PASSWORD: password
+    ports:
+      - "5432:5432"
+    volumes:
+      - lite-menu
+
+volumes:
+  lite-menu:
+
+networks:
+  lite-menu:
+    driver: bridge
+    

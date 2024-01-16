@@ -1,0 +1,47 @@
+// prisma/schema.prisma
+datasource db {
+  provider  = "postgresql"
+  url  	    = env("DATABASE_URL")
+// directUrl = env("DIRECT_URL")
+}
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+model User {
+  id Int @id @default(autoincrement())
+  email String @unique
+  tel String? @unique
+  name String?
+  restaurants Restaurant[]
+}
+
+model Restaurant {
+  id Int @id @default(autoincrement())
+  name String
+  address String
+  tel String?
+  owner User @relation(fields: [userId], references: [id])
+  userId Int
+  categorires Category[]
+}
+
+model Category {
+  id Int @id @default(autoincrement())
+  name String
+  restaurant Restaurant @relation(fields: [restaurantId], references: [id])
+  restaurantId Int
+  menus Menu[]
+
+}
+
+model Menu {
+  id Int @id @default(autoincrement())
+  name String
+  description String?
+  price Int
+  isAvailable Boolean @default(false)
+  category Category @relation(fields: [categoryId], references: [id])
+  categoryId Int
+}
